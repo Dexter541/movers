@@ -413,25 +413,35 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-links {
-        display: none;
+        display: none !important;
     }
-
     .mobile-menu {
         display: flex;
     }
-
+    .side-nav {
+        display: flex !important;
+    }
     .hero h1 {
         font-size: 2.5rem;
     }
-
     .about-content,
     .contact-content {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
     .features {
         grid-template-columns: 1fr;
+    }
+}
+@media (min-width: 769px) {
+    .nav-links {
+        display: flex !important;
+    }
+    .mobile-menu {
+        display: none !important;
+    }
+    .side-nav {
+        display: none !important;
     }
 }
 
@@ -445,4 +455,75 @@ footer {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Side Nav Styles */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    color: white;
+    z-index: 2000;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.15);
+    transition: left 0.3s cubic-bezier(0.77,0.2,0.05,1.0);
+    display: none;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+.side-nav.open {
+    left: 0;
+}
+.side-nav .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    align-self: flex-end;
+    margin: 0 1rem 2rem 0;
+    cursor: pointer;
+}
+.side-nav-links {
+    list-style: none;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.side-nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.side-nav-links a:hover {
+    color: #ffd700;
+}
+/* Overlay for side nav */
+#sideNavOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    z-index: 1500;
+    transition: opacity 0.3s;
+}
+#sideNavOverlay.active {
+    display: block;
+    opacity: 1;
+}
+/* Enhance mobile nav button */
+#mobileMenuButton {
+    z-index: 2100;
+}
+#mobileMenuButton span {
+    background: #764ba2;
+    height: 4px;
+    border-radius: 2px;
 }

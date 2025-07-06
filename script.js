@@ -12,13 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Mobile menu toggle
-const mobileMenu = document.querySelector('.mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-mobileMenu.addEventListener('click', () => {
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-});
+// Mobile menu toggle - handled by side nav below
 
 // Scroll animations
 const observerOptions = {
@@ -65,5 +59,67 @@ window.addEventListener('scroll', () => {
     const hero = document.querySelector('.hero');
     if (hero) {
         hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+});
+
+// Mobile Side Nav logic
+document.addEventListener('DOMContentLoaded', function() {
+    const sideNav = document.getElementById('sideNav');
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const closeSideNav = document.getElementById('closeSideNav');
+
+    // Create overlay for side nav
+    let sideNavOverlay = document.getElementById('sideNavOverlay');
+    if (!sideNavOverlay) {
+        sideNavOverlay = document.createElement('div');
+        sideNavOverlay.id = 'sideNavOverlay';
+        document.body.appendChild(sideNavOverlay);
+    }
+
+    function openSideNav() {
+        console.log('Opening side nav');
+        if (sideNav) {
+            sideNav.classList.add('open');
+            sideNav.setAttribute('aria-hidden', 'false');
+        }
+        sideNavOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeSideNavFunc() {
+        console.log('Closing side nav');
+        if (sideNav) {
+            sideNav.classList.remove('open');
+            sideNav.setAttribute('aria-hidden', 'true');
+        }
+        sideNavOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', openSideNav);
+        console.log('Mobile menu button listener added');
+    } else {
+        console.log('Mobile menu button not found');
+    }
+    
+    if (closeSideNav) {
+        closeSideNav.addEventListener('click', closeSideNavFunc);
+        console.log('Close side nav button listener added');
+    } else {
+        console.log('Close side nav button not found');
+    }
+    
+    if (sideNavOverlay) {
+        sideNavOverlay.addEventListener('click', closeSideNavFunc);
+    }
+    
+    if (sideNav) {
+        sideNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeSideNavFunc);
+        });
+        console.log('Side nav found and link listeners added');
+    } else {
+        console.log('Side nav not found');
     }
 });
